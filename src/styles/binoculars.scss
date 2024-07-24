@@ -1,0 +1,66 @@
+
+$pad: 5vw;
+$width: 40vw;
+$header: clamp(50px, 10vh, 10vh);
+
+div.binoculars {
+
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(#fff, #cff1ef, #73ad8a);
+
+}
+
+div.nocular-left {
+    left: $pad;
+}
+
+div.nocular-right {
+    left: 100vw - $pad - $width;
+}
+
+div.nocular {
+
+    z-index: 1;
+    top: calc($pad + $header);
+    position: absolute;
+    border-radius: 50%;
+    width: $width;
+    height: $width;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid black;
+    background-color: #f1ffff;
+    overflow: hidden;
+
+}
+
+div.bridge {
+
+    position: absolute;
+    z-index: 0;
+    top: calc($pad + $header);
+    left: calc($pad + .5 * $width);
+    height: calc($width / 3);
+    width: calc(100vw  - calc(2 * $pad) - $width);
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    background-color: lightgrey;
+}
+
+div.connector {
+
+    position: absolute;
+    width: calc($width / 3);
+    top: calc($pad + $header);
+    left: calc(50vw - $width / 6);
+    aspect-ratio: 1/1;
+    border: 3px solid black;
+    border-radius: 50%;
+    background-color: lightgrey;
+
+}

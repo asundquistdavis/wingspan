@@ -1,0 +1,155 @@
+
+$card-bg1: #f7f4e9;
+$card-tl-bg: #f0ead6;
+$card-text-bg: #f7f4e9; 
+$card-border: #d0ca96;
+$card-ability-activation: #c19a6b;
+$card-ability-instantiation: #f2d2bd;
+
+div.bird-card {
+
+    --height: 336px;
+    --chamber: calc(var(--height) * .025);
+    --spacer: calc(var(--height) * .05);
+
+    display: flex;
+    flex-direction: column;
+
+    height: var(--height);
+    aspect-ratio: 5/7;
+    background-color: $card-bg1;
+    border-radius: var(--chamber);
+
+
+}
+
+
+div.bird-card-top {
+
+    height: calc(var(--height)*.25);
+    margin-bottom: var(--spacer);
+    display: flex;
+    flex-direction: row;
+
+}
+
+div.bird-card-top-left {
+
+    aspect-ratio: 1/1;
+    height: 100%;
+    margin-left: var(--spacer);
+    border-radius: var(--chamber) 0 var(--chamber) var(--chamber);
+    background-color: $card-tl-bg;
+    border: .5px solid $card-border;
+    display: flex;
+    flex-direction: column;
+
+}
+
+div.bird-card-habitats {
+
+    --width: calc(var(--height) * 25 / 3 / 100);
+    height: var(--width);
+    margin: auto;
+    margin-top: calc(.5*var(--spacer));
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+    align-items: stretch;
+    width: 75%;
+}
+
+div.bird-card-habitat-wrapper {
+    width: var(--width);
+    height: var(--width);
+    background-color: var(--color);
+}
+
+div.bird-card-symbol {
+    margin: 0;
+    padding: 0;
+}
+
+
+div.bird-card-habitats div.bird-card-habitat-wrapper:nth-child(3n) {
+
+    transform: translate(0, calc(var(--width) * .5));
+    
+}
+
+div.bird-card-habitats:has(> :nth-child(3):last-child) {
+
+    height: calc( 2 * var(--width) );
+    margin-top: calc( .5 * var(--spacer) - .5 * var(--width) );
+
+}
+
+div.bird-card-foods {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-top: auto;
+    margin-bottom: calc(.5*var(--spacer));
+    font-size: var(--spacer)
+}
+
+div.bird-card-foods div.food-symbol:not(:first-child)::before {
+
+    content: '+';
+}
+
+
+div.bird-card-top-right {
+
+    margin-top: var(--spacer);
+    margin-bottom: var(--spacer);
+    width: 100%;
+    height: calc(100% - calc(2 * var(--spacer)));
+    background-color: $card-text-bg;
+    border: .5px solid $card-border;
+    border-radius: calc(var(--chamber) * .25);
+    border-right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+div.bird-card-name {
+
+    font-size: var(--spacer);
+}
+
+div.bird-card-latin {
+
+    font-size: calc(var(--spacer) * .75);
+    font-style:italic;
+}
+
+div.bird-card-middle {
+
+    margin-bottom: auto;
+
+}
+
+div.bird-card-bottom {
+
+    height: calc(var(--spacer) * 5);
+    width: 100%;
+    margin-top: auto;
+    background-color: $card-ability-instantiation;
+}
+
+div.bird-card-ability {
+    font-size: calc(var(--spacer));
+}
+
+div.bird-card-flavor {
+
+    width: 100%;
+    margin: var(--spacer);
+    font-size: calc(var(--spacer) * .75);
+}

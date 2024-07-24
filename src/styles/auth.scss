@@ -1,0 +1,47 @@
+
+
+
+div.form-m {
+
+    position: relative;
+    top: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+div.form-r {
+
+    margin-left: 10px;
+
+}
+
+
+
+input.form-1 {
+
+    padding: 5px;
+    font-size: 150%;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+}
+
+button.form-2 {
+
+    padding: 5px;
+    font-size: 150%;
+    background-color: transparent;
+    border: 0;
+    box-sizing: border-box;
+
+
+}
+
+button.form-2:hover {
+
+    text-decoration: underline;
+
+}

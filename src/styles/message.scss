@@ -1,0 +1,74 @@
+
+div.message-modal {
+
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    background-color: rgba($color: grey, $alpha: .3);
+    z-index: 100;
+
+}
+
+div.message-content {
+
+    position: absolute;
+    // width: 50vw;
+    top: 20vh;
+    left: 50vw;
+    transform: translate(-50%, 0);
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+
+}
+
+div.message-header {
+
+    font-size: 200%;
+    align-self: center;
+    text-decoration: underline;
+
+}
+
+div.message-body {
+
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+}
+
+div.message-bottom {
+
+    // margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+
+}
+
+div.message-text {
+
+    font-size: 150%;
+
+}
+
+button.message-button {
+
+    font-size: 150%;
+    border: 0;
+    margin-left: 10px;
+
+}
+
+button.message-button:hover {
+
+    text-decoration: underline;
+    font-size: 150%;
+
+}
