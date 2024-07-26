@@ -5,6 +5,8 @@ import Bird from "./bird";
 
 export default class BirdCard implements Renderable {
 
+    renderDown: () => void = () => {};
+
     id: string;
     bird:Bird;
     element: HTMLElement;

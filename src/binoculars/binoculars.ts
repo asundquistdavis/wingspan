@@ -1,12 +1,12 @@
 import Bird from "../lib/bird";
 import BirdCard from "../lib/birdCard";
-import { Renderable, Root, newElement } from "../lib/master";
+import { Renderable, newElement } from "../lib/master";
 import Form from "./form";
 import '../styles/binoculars.scss';
 import Header from "../lib/header";
 
 
-export default class Binoculars implements Root {
+export default class Binoculars {
 
     id:string = 'binoculars';
     element: Element;

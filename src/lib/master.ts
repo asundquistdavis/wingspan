@@ -1,112 +1,131 @@
 import axios from "axios";
 
-export class Connection {
-    
-    payload:Payload = new Payload();
-    listeners:((data:Discharge)=>void)[]=[(data:Discharge)=>{this.payload.connectionId=data.connectionId}];
-    discharge: typeof Discharge;
-    CONFIG:object = { method:'POST', headers: {"Content-Type": "application/json"}};
-    DOMAIN:string = 'http://127.0.0.1:5000';
-    APIURI:string = '/api';
-    
-    get id():number {
-        return this.payload.connectionId;
+export const CONNECTION = {
+    CONFIG: { method:'POST', headers: {"Content-Type": "application/json"}},
+    // DOMAIN: 'http://127.0.0.1:5000',
+    APIURI: '/api',
+    api:async (payload:any, currentState:ServerSate, reset?:()=>void)=>{return await 
+        axios.post(CONNECTION.APIURI, payload, CONNECTION.CONFIG)
+        .then(
+            response=>{
+                currentState.parseResponseIntoState(response.data);
+                reset();
+            }, 
+            reason => currentState.httpErrorIntoState(reason)
+        )
     }
-    
-    set id(_val:number) {
-        this.payload.connectionId = _val;
-    };
-    
-    static async new(userId:number, pageName:string, discharge:typeof Discharge):Promise<Connection> {
-        
-        const connection = new Connection();
-        connection.discharge = discharge;
-        connection.payload.userId = userId;
-        connection.payload.pageName = pageName;
-        console.log(connection.payload)
-        connection.poll();
-        return connection
-        
-    };
-    
-    async poll() {
-        
-        const data:Discharge = this.discharge.from((await axios.post(this.DOMAIN + this.APIURI, this.payload, this.CONFIG)).data);
-        this.listeners.forEach(listener=>listener(data));
-        this.poll();
-        
-    };
+};
 
-    registerListener(listener:(data:Discharge)=>void) {
+export class State {
 
-        this.listeners.push(listener);
+    events: {name:string, callback:()=>void}[] = [];
+
+    constructor() {}
+
+    dispatchEvents = () => {
+
+        this.events.forEach(event=>event.callback());
 
     };
-    
+
+    registerEvent = (event:{name:string, callback:()=>void}) => {
+
+        this.events.push(event);
+
+    };
+
+    removeEvent = (name:string) => {
+
+        this.events = this.events.filter(event => event.name!==name);
+
+    };
+
 }
 
+export class ServerSate extends State {
+    
+    page: string = 'index';
+    connectionId: null | string = null;
+    user: UserState = UserState.NO_USER();
+    isError: boolean = false;
+    errorString: string = '';
 
-export class Payload {
-    
-    new:any;
-    connectionId:number = null;
-    userId:number = 0;
-    pageName:string = "";
-    
     constructor() {
-        
+        super();
     }
-    
+
+    static new():ServerSate {
+        
+        const state = new ServerSate();
+        return state 
+
+    };
+
+    parseResponseIntoState = (response:any) => {
+
+        if (response.isError) {
+
+            this.isError = true;
+            this.errorString = response.errorString;
+            
+        };
+
+        if (response.user) {
+            
+            console.log(response.user);
+            
+            this.user.updateUser(response.user);
+
+        }
+
+        this.dispatchEvents();
+
+    };
+
+    httpErrorIntoState = (reason:any) => {
+
+        console.error(reason);
+        this.isError = true;
+        this.errorString = 'Http Error';
+
+        this.dispatchEvents();
+
+    };
+
 }
 
-export class Discharge {
-    
-    connectionId:number;
-    
-    static from(object:any):Discharge {
+
+class UserState extends State {
+
+    id:string = '';
+    name:string = '';
+
+    static NO_USER():UserState {
         
-        const discharge = new Discharge();
-        discharge.connectionId = object.connectionId;
-        return discharge;
-        
+        const user = new UserState();
+        user.id = 'NO_USER'
+        return user
+    
     };
-    
+
+    updateUser = (userProto:any) => {
+
+        if (userProto.name) {this.name = userProto.name;};
+        if (userProto.id) {this.id = userProto.id;};
+        this.dispatchEvents();
+        
+    }
+
 }
 
 export type Renderable = {
 
     element:Element;
-    render:(parent:Element, params?:Partial<{badge:boolean, width:number, height:number}>)=>void;
+    render:(parent:Element)=>void;
     renderDown:()=>void;
 
 };
 
-export class Root {
-
-    element:Element = document.getElementById('root');
-    children:Renderable[] = [];
-
-    static new():Root {
-
-        const root = new Root();
-
-        return root
-
-    };
-
-    render(): void {
-
-        this.children.forEach(child=>{
-
-            child.element?.remove();
-
-            child.render(this.element);
-        
-        });
-
-    };
-
-}
 
 export function newElement<K extends keyof HTMLElementTagNameMap>(key:K, id:string, attrs?:Partial<NewElementOptions>, innerText?:string):HTMLElementTagNameMap[K] {
 
@@ -126,19 +145,26 @@ export type NewElementOptions = {
     autocomplete:string;
     src:string;
     width:string;
+    draggable:string;
 
 }
 
 
 export function capitalize(string:string):string {
 
-    return string.length > 0? (string[0].toUpperCase()  +string.slice(1)) : string;
+    return string.length > 0? (string[0].toUpperCase()  +string.slice(1)) : string
 
 }
 
 export function title(string:string):string {
 
     const subs = string.split(new RegExp('\\s'));
-    return subs.length>0? subs.map(capitalize).join(' '): string;
+    return subs.length>0? subs.map(capitalize).join(' '): string
 
+}
+
+export function sentence(string:string):string {
+
+    const sentences = string.split('. ')
+    return sentences.length>0? sentences.map(capitalize).join('. '): string
 }

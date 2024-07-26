@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     devtool: 'eval-source-map',
-    entry: { game: './src/game/index.ts', binoculars: './src/binoculars/index.ts', auth: './src/auth/index.ts' },
+    entry: { index: './src/index/index.ts' },
     output: {
         publicPath: '/web',
         filename: '[name].js',

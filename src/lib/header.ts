@@ -6,6 +6,7 @@ export default class Header implements Renderable {
     
     
     element: HTMLElement;
+    badge:boolean = false;
     routes: {text:string, callback:()=>void, eClass?:string}[] = [];
     
     static new():Header {
@@ -40,9 +41,9 @@ export default class Header implements Renderable {
 
     };
 
-    createElement(badge:boolean) {
+    createElement = () => {
 
-        if (badge) {
+        if (this.badge) {
 
             this.element = newElement('div', 'header', {class: 'header-badge'});
             const child = newElement('div', 'header-badge-child', {class: 'show'});
@@ -62,28 +63,33 @@ export default class Header implements Renderable {
 
     }
 
-    render(parent: Element, params?:Partial<{badge:boolean, width:number, height:number}>) { 
+    render = (parent: Element) => { 
 
-        this.createElement(params?.badge);
+        this.createElement();
         parent.appendChild(this.element);
 
     };
 
-    renderDown():void {
+    renderDown:()=>void = () => {
 
-        if (!this.element) {return}
-        const parent = this.element.parentElement;
-        this.element.remove();
-        this.createElement(false);
-        parent.appendChild(this.element);
+        this.createElement();
 
     };
 
     registerNewRoute(text:string, callback:()=>void, eClass?:string):void {
 
-        this.routes.push({text, callback, eClass})
-        
-    }
+        this.routes.push({text, callback, eClass});
+        this.renderDown();
+
+    };
+
+    removeRoute = (text:string) => {
+
+        this.routes = this.routes.filter(route=>route.text!==text);
+        this.renderDown();
+
+    };
+
 
 }
 

@@ -1,0 +1,185 @@
+
+
+
+div.game-board {
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+}
+
+div.game-board-row {
+
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 25%;
+    margin: 2px 0;
+}
+
+
+div.game-board-row.top {
+    
+    height: 10%;
+    
+}
+
+div.game-board-card {
+    
+    --width: calc(100vw / 7 - 8px);
+    display: flex;
+    flex-direction: column;
+    width: var(--width);
+    flex-shrink: 0;
+    height: 100%;
+    border: 1px solid black;
+    overflow: hidden;
+    background-color: beige;
+    margin: 0 4px;
+    border-radius: 5px;
+}
+
+div.game-board-card.primary {
+
+    border: 0;
+
+}
+
+div.gb-primary-top {
+
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+div.gb-primary-left {
+    margin-left: 5px;
+    width: 50%;
+}
+
+img.gb-primary-img {
+    width: 100%;
+}
+
+div.gb-primary-right {
+    margin-left:5px;
+    flex-grow: 1;
+
+}
+
+div.gb-primary-bottom {
+
+    margin-top:auto;
+    margin-bottom: 5px;
+}
+
+div.gb-card-top {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 25%;
+    margin-top:5px;
+}
+
+img.gb-card-top-img{
+    height: 100%;
+    margin: auto;
+    display: block;
+}
+
+div.gb-card-mid {
+
+    display: flex;
+    flex-direction: row;
+    margin-top:auto;
+    margin-bottom: auto;
+    height: 25%;
+}
+
+div.gb-card-entity {
+
+    width: calc(var(--width) / 4);
+    height: calc(var(--width) / 4);
+    margin-right: calc(var(--width) / 20);
+
+}
+
+div.gb-card-entity:first-child {
+    margin-left: auto;
+}
+
+div.gb-card-entity:last-child {
+
+    margin-right:auto;
+}
+
+img.gb-card-entity-img {
+
+    height: 100%;
+    margin: auto;
+    display: block;
+}
+
+div.gb-card-bot {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom:5px;
+    height: 30%;
+
+}
+
+div.gb-hr {
+    border: 1px solid black;
+    width: 80%;
+    height: 0;
+    align-self: center;
+}
+
+div.gb-card-bot-left {
+
+    width: 20%;
+    aspect-ratio: 1/1;
+    margin-right: 5px;
+}
+
+div.gb-card-bot-mid {
+
+    width: 20%;
+    aspect-ratio: 1/1;
+    margin-right: 5px;
+
+}
+div.gb-card-bot-right {
+
+    width: 20%;
+    aspect-ratio: 1/1;
+}
+
+img.gb-card-bot-opt {
+
+    height: 100%;
+    margin: auto;
+    display: block;
+}
+img.gb-card-bot-arrow {
+
+    height:100%;
+    margin: auto;
+    display: block;
+}
+
+img.gb-card-bot-ent {
+
+    height: 100%;
+    margin: auto;
+    display: block;
+}

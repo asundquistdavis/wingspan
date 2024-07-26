@@ -1,6 +1,10 @@
+import axios from "axios";
 import Header from "./header";
-import { Renderable, newElement } from "./master";
+import { Renderable, ServerSate, newElement } from "./master";
 import MessageAble, { Message } from "./messageable";
+import { auth, loadCurrentUser } from "./auth";
+import '../styles/master.scss';
+import GameBoard from "./gameboard";
 
 export default class App extends MessageAble {
 
@@ -9,32 +13,26 @@ export default class App extends MessageAble {
     header:Header;
     content:Renderable;
     message:Message;
+    state:ServerSate = ServerSate.new();
 
     static new():App {
 
         const app = new App();
-        window.onresize = app.render.bind(app);
+        console.log(app);
+        // window.onresize = app.render.bind(app);
         const header = Header.new();
-        const content = new Content();
+        const content = new GameBoard();
         app.header = header;
-        header.registerNewRoute('log in', () => app.auth(), 'end')
         app.content = content;
+        app.state.user.registerEvent({name: 'user change', callback: app.header.renderDown})
+        app.loadCurrentUser();
+        app.render();
         return app
 
     };
 
-    login = () => {
-
-        this.sendMessage('Success', 'Loading...', this.removeMessage);
-    };
-
-    auth = () => {
-
-        let username = '';
-        const usernameInput = newElement('input', 'username-input');
-        usernameInput.onkeydown = () => username = usernameInput.value;
-        this.sendMessage('Log In', 'username', this.login, [{element: usernameInput}]);
-    };
+    auth:()=>void = auth.bind(this);
+    loadCurrentUser:()=>void = loadCurrentUser.bind(this);
 
     createElement():void {
 
@@ -44,12 +42,14 @@ export default class App extends MessageAble {
         this.element = newElement('div', 'app');
 
         // small view
-        if ((height < 600) || (width < 500)) {
-            this.header.render(this.element, {badge: true})
-            this.content.render(this.element, {width, height});
+        if ((height < 600) || (width < 700)) {
+            console.log(height, width)
+            this.header.badge = true;
+            this.header.render(this.element);
+            this.content.render(this.element);
         } else {
-            this.header.render(this.element, {width, height: .1 * height, badge: false});
-            this.content.render(this.element, {width, height: .9 * height});
+            this.header.render(this.element);
+            this.content.render(this.element);
         }
 
     };
@@ -73,14 +73,3 @@ export default class App extends MessageAble {
 
 }
 
-
-class Content implements Renderable {
-    
-    element: Element;
-    render: (parent: Element, params?: Partial<{ badge: boolean; width: number; height: number; }>) => void =
-    () => {
-        
-    };
-    renderDown: () => void;
-
-}

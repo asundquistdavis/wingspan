@@ -5,6 +5,7 @@ import '../styles/form.scss';
 
 
 export default class Form implements Renderable {
+    renderDown: () => void;
 
     element: Element;
     bird: Bird; 
